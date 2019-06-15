@@ -8,17 +8,17 @@
  */
 void print_array(const int *array, size_t size)
 {
-    size_t i;
+	size_t i;
 
-    i = 0;
-    while (array && i < size)
-    {
-        if (i > 0)
-            printf(", ");
-        printf("%d", array[i]);
-        ++i;
-    }
-    printf("\n");
+	i = 0;
+	while (array && i < size)
+	{
+		if (i > 0)
+			printf(", ");
+		printf("%d", array[i]);
+		++i;
+	}
+	printf("\n");
 }
 
 /**
@@ -28,18 +28,18 @@ void print_array(const int *array, size_t size)
  */
 void print_list(const listint_t *list)
 {
-    int i;
+	int i;
 
-    i = 0;
-    while (list)
-    {
-        if (i > 0)
-            printf(", ");
-        printf("%d", list->n);
-        ++i;
-        list = list->next;
-    }
-    printf("\n");
+	i = 0;
+	while (list)
+	{
+		if (i > 0)
+			printf(", ");
+		printf("%d", list->n);
+		++i;
+		list = list->next;
+	}
+	printf("\n");
 }
 
 /**
@@ -49,15 +49,28 @@ void print_list(const listint_t *list)
  */
 void check_list(const listint_t *list)
 {
-    while (list)
-    {
-        if (list->next && list->n > list->next->n)
-            printf("ERROR: [%d] > [%d]\n", list->n, list->next->n);
-        list = list->next;
-    }
-    printf("LIST ORDERED!\n");
+	while (list)
+	{
+		if (list->next && list->n > list->next->n)
+			printf("ERROR: [%d] > [%d]\n", list->n, list->next->n);
+		list = list->next;
+	}
 }
 
+/**
+ * check_list - checks if list is ordered
+ *
+ * @list: The list to be printed
+ */
+void check_array(const int *array, size_t size)
+{
+	size_t i;
+	for (i = 0; i < size - 1; i++)
+	{
+		if (array[i] > array[i + 1])
+			printf("ERROR: [%d] > [%d]\n", array[i], array[i + 1]);
+	}
+}
 
 /**
  * rand_array - generates random int array
@@ -69,15 +82,15 @@ void check_list(const listint_t *list)
  */
 int *rand_array(int len, int max)
 {
-    int *arr;
+	int *arr;
 
-    arr = calloc(len, sizeof(int));
-    if (!arr)
-        return (NULL);
-    if (!max)
-        max = RAND_MAX;
-    srand(time(NULL));
-    while (len--)
-        arr[len] = rand() % max;
-    return (arr);
+	arr = calloc(len, sizeof(int));
+	if (!arr)
+		return (NULL);
+	if (!max)
+		max = RAND_MAX;
+	srand(time(NULL));
+	while (len--)
+		arr[len] = rand() % max;
+	return (arr);
 }
