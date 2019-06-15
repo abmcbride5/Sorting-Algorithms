@@ -41,8 +41,8 @@ int main(void)
     listint_t *list;
 
     int *array;
-    size_t n = 100;
-    array = rand_array(100, 0);
+    size_t n = 101;
+    array = rand_array(n, 0);
     list = create_listint(array, n);
     if (!list)
         return (1);
@@ -50,7 +50,7 @@ int main(void)
     printf("\n");
     insertion_sort_list(&list);
     printf("\n");
-    print_list(list);
+    print_list(list);\
     check_list(list);
     return (0);
 }

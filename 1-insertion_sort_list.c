@@ -45,6 +45,7 @@ void insertion_sort_list(listint_t **list)
 				swap(j->prev, j);
 				if (!j->prev)
 					*list = j;
+				print_list((const listint_t *)*list);
 				/* printf("j is: [%d]\n", j->n); */
 			}
 			else
