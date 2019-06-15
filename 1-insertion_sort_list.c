@@ -8,23 +8,15 @@
  */
 void swap(listint_t *a, listint_t *b)
 {
-    listint_t temp_a, temp_b;
+	if (a->prev)
+		a->prev->next = b;
+	if (b->next)
+		b->next->prev = a;
+	a->next = b->next;
+	b->prev = a->prev;
+	a->prev = b;
+	b->next = a;
 
-    temp_a.next = a->next;
-    temp_a.prev = a->prev;
-    temp_a.n = a->n;
-    temp_b.next = b->next;
-    temp_b.prev = b->prev;
-    temp_b.n = b->n;
-
-    a->prev = b;
-    a->next = temp_b.next;
-    if (temp_a.prev)
-        temp_a.prev->next = b;
-    b->prev = temp_a.prev;
-    b->next = a;
-    if (temp_b.next)
-        temp_b.next->prev = a;
 }
 
 /* insertion_sort_list - insertion sorts a doubly-linked list
@@ -34,34 +26,34 @@ void swap(listint_t *a, listint_t *b)
  */
 void insertion_sort_list(listint_t **list)
 {
-    listint_t *i, *j;
+	listint_t *i, *j;
 
-    if (!list || !*list || !(*list)->next)
-        return;
+	if (!list || !*list || !(*list)->next)
+		return;
 
-    i = (*list)->next;
-    while (i)
-    {
-        printf("----> i:[%d]\n", i->n);
-        j = i;
-        i = i->next;
-        printf("j STARTS at [%d]\n", j->n);
-        while (j && j->prev)
-        {
-            if (j->prev->n > j->n)
-            {
-                printf("Swapping: [%d] [%d]\n", j->prev->n, j->n);
-                swap(j->prev, j);
-                if (!j->prev)
-                    *list = j;
-                print_list((const listint_t *)*list);
-                printf("j is: [%d]\n", j->n);
-            }
-            else
-                j = j->prev;
-            if (j)
-                printf("j is: now [%d]\n", j->n);
-        }
-        
-    }
+	i = (*list)->next;
+	while (i)
+	{
+		printf("----> i:[%d]\n", i->n);
+		j = i;
+		i = i->next;
+		printf("j STARTS at [%d]\n", j->n);
+		while (j && j->prev)
+		{
+			if (j->prev->n > j->n)
+			{
+				printf("Swapping: [%d] [%d]\n", j->prev->n, j->n);
+				swap(j->prev, j);
+				if (!j->prev)
+					*list = j;
+				print_list((const listint_t *)*list);
+				printf("j is: [%d]\n", j->n);
+			}
+			else
+				j = j->prev;
+			if (j)
+				printf("j is: now [%d]\n", j->n);
+		}
+
+	}
 }
