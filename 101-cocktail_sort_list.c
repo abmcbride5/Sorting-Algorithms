@@ -1,7 +1,8 @@
 #include "sort.h"
-/* swap - swaps 2 nodes in a doubly-linked list
-* @a: address of first node
-* @b: address of second node
+/*
+*swap - swaps 2 nodes in a doubly-linked list
+*@a: address of first node
+*@b: address of second node
 *
 *Return: void
 */
@@ -20,7 +21,7 @@ void swap(listint_t *a, listint_t *b)
 
 
 /**
-*cocktail_sort_list: sorts linked list using cocktail shaker sort
+*cocktail_sort_list - sorts linked list using cocktail shaker sort
 *
 *@list: doubly linked list to be sorted
 */
@@ -30,10 +31,9 @@ void cocktail_sort_list(listint_t **list)
 	int i = 0, j = 0;
 
 	len = *list;
-	while(len)
+	for (i = 0; len; i++)
 	{
 		len = len->next;
-		i++;
 	}
 	head = *list;
 	while (j < i)
@@ -46,9 +46,7 @@ void cocktail_sort_list(listint_t **list)
 				print_list(*list);
 			}
 			else
-			{
 				head = head->next;
-			}
 			if (head->next == NULL)
 				tail = head;
 		}
@@ -57,20 +55,16 @@ void cocktail_sort_list(listint_t **list)
 			if (tail->n < tail->prev->n)
 			{
 				swap(tail->prev, tail);
-				/*print_list(*list);*/
 				if (tail->prev == NULL)
 					*list = tail;
 				print_list(*list);
 
 			}
 			else
-			{	
 				tail = tail->prev;
-			}
 			if (tail->prev == NULL)
 				head = tail;
 		}
-		
 		j++;
 	}
 }
