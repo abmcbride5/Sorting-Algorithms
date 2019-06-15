@@ -1,6 +1,9 @@
 #include "sort.h"
 
-/* swap - swaps 2 int values
+/**
+ * swap - swaps 2 int values
+ * @array: the integer array to sort
+ * @size: the size of the array
  * @a: address of first value
  * @b: address of second value
  *
@@ -18,10 +21,12 @@ void swap(int *array, size_t size, int *a, int *b)
 	}
 }
 
-/* lomuto_partition - partitions the array
+/**
+ * lomuto_partition - partitions the array
  * @array: the integer array to sort
+ * @size: the size of the array
  * @lo: the low index of the sort range
- * @: the high index of the sort range
+ * @hi: the high index of the sort range
  *
  * Return: void
  */
@@ -38,10 +43,12 @@ size_t lomuto_partition(int *array, size_t size, ssize_t lo, ssize_t hi)
 	return (i);
 }
 
-/* quicksort - quicksorts via Lomuto partitioning scheme
+/**
+ * quicksort - quicksorts via Lomuto partitioning scheme
  * @array: the integer array to sort
+ * @size: the size of the array
  * @lo: the low index of the sort range
- * @: the high index of the sort range
+ * @hi: the high index of the sort range
  *
  * Return: void
  */
@@ -57,7 +64,8 @@ void quicksort(int *array, size_t size, ssize_t lo, ssize_t hi)
 	}
 }
 
-/* quick_sort - calls quicksort
+/**
+ * quick_sort - calls quicksort
  * @array: the integer array to sort
  * @size: the size of the array
  *
