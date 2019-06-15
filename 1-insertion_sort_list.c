@@ -8,12 +8,23 @@
  */
 void swap(listint_t *a, listint_t *b)
 {
-    listint_t temp;
-    temp.next = b->next;
-    temp.prev = b->prev;
-    temp.n = b->n;
-    
+    listint_t temp_a, temp_b;
 
+    temp_a.next = a->next;
+    temp_a.prev = a->prev;
+    temp_a.n = a->n;
+    temp_b.next = b->next;
+    temp_b.prev = b->prev;
+    temp_b.n = b->n;
+
+    a->prev = b;
+    a->next = temp_b.next;
+    if (temp_a.prev)
+        temp_a.prev->next = b;
+    b->prev = temp_a.prev;
+    b->next = a;
+    if (temp_b.next)
+        temp_b.next->prev = a;
 }
 
 /* insertion_sort_list - insertion sorts a doubly-linked list
@@ -31,16 +42,26 @@ void insertion_sort_list(listint_t **list)
     i = (*list)->next;
     while (i)
     {
-        j = i->prev;
-        while (j->prev)
+        printf("----> i:[%d]\n", i->n);
+        j = i;
+        i = i->next;
+        printf("j STARTS at [%d]\n", j->n);
+        while (j && j->prev)
         {
             if (j->prev->n > j->n)
             {
+                printf("Swapping: [%d] [%d]\n", j->prev->n, j->n);
                 swap(j->prev, j);
-                print_list((const listint_t *)list);
+                if (!j->prev)
+                    *list = j;
+                print_list((const listint_t *)*list);
+                printf("j is: [%d]\n", j->n);
             }
-            j = j->prev;
+            else
+                j = j->prev;
+            if (j)
+                printf("j is: now [%d]\n", j->n);
         }
-        i = i->next;
+        
     }
 }
