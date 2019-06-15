@@ -40,7 +40,6 @@ void cocktail_sort_list(listint_t **list)
 	{
 		while (head && head->next)
 		{
-			printf("head in head %d\n", head->n);
 			if (head->n > head->next->n)
 			{
 				swap(head, head->next);
@@ -58,14 +57,17 @@ void cocktail_sort_list(listint_t **list)
 			if (tail->n < tail->prev->n)
 			{
 				swap(tail->prev, tail);
+				/*print_list(*list);*/
+				if (tail->prev == NULL)
+					*list = tail;
 				print_list(*list);
+
 			}
 			else
 			{	
 				tail = tail->prev;
 			}
 			if (tail->prev == NULL)
-				printf("head in tail %d\n", head->n);
 				head = tail;
 		}
 		
