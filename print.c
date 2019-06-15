@@ -41,3 +41,43 @@ void print_list(const listint_t *list)
     }
     printf("\n");
 }
+
+/**
+ * check_list - checks if list is ordered
+ *
+ * @list: The list to be printed
+ */
+void check_list(const listint_t *list)
+{
+    while (list)
+    {
+        if (list->next && list->n > list->next->n)
+            printf("ERROR: [%d] > [%d]\n", list->n, list->next->n);
+        list = list->next;
+    }
+    printf("LIST ORDERED!\n");
+}
+
+
+/**
+ * rand_array - generates random int array
+ *
+ * @len: the length of the array
+ * @max: the max size of each integer
+ * 
+ * Return: the generated int array
+ */
+int *rand_array(int len, int max)
+{
+    int *arr;
+
+    arr = calloc(len, sizeof(int));
+    if (!arr)
+        return (NULL);
+    if (!max)
+        max = RAND_MAX;
+    srand(time(NULL));
+    while (len--)
+        arr[len] = rand() % max;
+    return (arr);
+}
