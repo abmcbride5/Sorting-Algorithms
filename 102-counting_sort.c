@@ -41,6 +41,8 @@ void counting_sort(int *array, size_t size)
 		}
 	}
 	array2 = malloc(sizeof(int) * (k + 1));
+	if (!array2)
+		return;
 	for (c = 0; c < ((size_t)k + 1); c++)
 	{
 		if (c == 0)
@@ -66,5 +68,5 @@ void counting_sort(int *array, size_t size)
 		s++;
 	}
 	print_array(array2, (k + 1));
-
+	free(array2);
 }
