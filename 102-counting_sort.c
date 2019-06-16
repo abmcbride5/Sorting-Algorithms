@@ -29,7 +29,7 @@ int integer_count(int *array, size_t size, int range)
 */
 void counting_sort(int *array, size_t size)
 {
-	int k = 0, b = 0, r = 1;
+	int k = 0, b = 0, r = 1, s = 0;
 	size_t i, c;
 	int *array2;
 
@@ -52,8 +52,19 @@ void counting_sort(int *array, size_t size)
 			b = array2[c - 1] + integer_count(array, size, r);
 			array2[c] = b;
 			r++;
-			printf("r %d, c %lu, b %d\n", r, c, b);
 		}
 	}
+	for (c = 0; c < size; c++)
+	{
+		if (c == 0)
+			array[c] = integer_count(array2, ((size_t)k + 1), s);
+		else
+		{
+			b = array[c - 1] + integer_count(array2, ((size_t)k + 1), s);
+			array[c] = b;
+		}
+		s++;
+	}
 	print_array(array2, (k + 1));
+
 }
