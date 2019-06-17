@@ -23,7 +23,7 @@ size_t get_max_gap(size_t size)
  *
  * Return: void
  */
-inline void shell_sort(int *array, size_t size)
+void shell_sort(int *array, size_t size)
 {
 	size_t gap, i, j;
 	int temp;
