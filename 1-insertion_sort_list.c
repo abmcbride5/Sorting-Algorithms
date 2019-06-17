@@ -35,24 +35,19 @@ void insertion_sort_list(listint_t **list)
 	i = (*list)->next;
 	while (i)
 	{
-		/* printf("----> i:[%d]\n", i->n); */
 		j = i;
 		i = i->next;
-		/* printf("j STARTS at [%d]\n", j->n); */
 		while (j && j->prev)
 		{
 			if (j->prev->n > j->n)
 			{
-				/* printf("Swapping: [%d] [%d]\n", j->prev->n, j->n); */
 				swap(j->prev, j);
 				if (!j->prev)
 					*list = j;
 				print_list((const listint_t *)*list);
-				/* printf("j is: [%d]\n", j->n); */
 			}
 			else
 				j = j->prev;
-				/* printf("j is: now [%d]\n", j->n); */
 		}
 
 	}
