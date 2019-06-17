@@ -57,6 +57,11 @@ void counting_sort(int *array, size_t size)
 	}
 	print_array(array2, (k + 1));
 	newArray = malloc(sizeof(int) * size);
+	if (!newArray)
+	{
+		free(array2);
+		return;
+	}
 	for (i = 0; i < size; i++)
 		newArray[array2[array[i]]-- - 1] = array[i];
 	for (i = 0; i < size; i++)
