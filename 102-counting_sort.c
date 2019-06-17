@@ -52,8 +52,10 @@ void counting_sort(int *array, size_t size)
 		if (c == 0)
 			array2[c] = integer_count(array, size, r);
 		else
+		{
 			b = array2[c - 1] + integer_count(array, size, r);
-		array2[c] = b;
+			array2[c] = b;
+		}
 		r++;
 	}
 	print_array(array2, (k + 1));
