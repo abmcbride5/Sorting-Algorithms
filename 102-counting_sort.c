@@ -33,6 +33,10 @@ void counting_sort(int *array, size_t size)
 	size_t i, c;
 	int *array2, *newArray;
 
+	if (!*array || !size)
+		return;
+	if (size < 2)
+		return;
 	for (i = 0; i < size; i++)
 	{
 		if (array[i] > k)
