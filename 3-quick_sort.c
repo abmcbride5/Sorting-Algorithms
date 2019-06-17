@@ -55,6 +55,7 @@ void quicksort(int *array, size_t size, ssize_t lo, ssize_t hi)
 	if (lo < hi)
 	{
 		size_t p = lomuto_partition(array, size, lo, hi);
+
 		quicksort(array, size, lo, p - 1);
 		quicksort(array, size, p + 1, hi);
 	}
