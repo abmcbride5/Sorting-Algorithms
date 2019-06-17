@@ -55,6 +55,8 @@ void cocktail_sort_list(listint_t **list)
 	listint_t *tail, *head, *len;
 	int i = 0, j = 0, swaped = 1;
 
+	if (!*list)
+		return;
 	len = *list;
 	for (i = 0; len; i++)
 	{
