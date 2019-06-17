@@ -2,8 +2,8 @@
 
 /**
  * get_digit - gets a digit from a number
- * @number - the integer
- * @digit - the digit position to get
+ * @number: the integer
+ * @digit: the digit position to get
  *
  * Return: the digit value at given position
 **/
@@ -17,18 +17,8 @@ int get_digit(int number, int digit)
 	return (ret);
 }
 
-
-void print_buckets(int *b)
-{
-	int i = 0;
-
-	printf("b {");
-	for (; i < 10; i++)
-		printf("%d, ", b[i]);
-	printf("}\n");
-}
-/*
- * radix_sort - sorts by radix
+/**
+ * radix_pass - sorts by radix
  * @array: the integer array to sort
  * @size: the size of the array
  * @digit: the current digit to check
@@ -40,7 +30,7 @@ int radix_pass(int *array, ssize_t size, int digit, int *new_array)
 {
 	ssize_t i;
 	int buckets[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
-	
+
 	for (i = 0; i < size; i++)
 		buckets[get_digit(array[i], digit)]++;
 	if (buckets[0] == size)
@@ -51,7 +41,7 @@ int radix_pass(int *array, ssize_t size, int digit, int *new_array)
 			return (0);
 		buckets[i] += buckets[i - 1];
 	}
-	for(i = size - 1; i > -1; i--)
+	for (i = size - 1; i > -1; i--)
 		new_array[buckets[get_digit(array[i], digit)]-- - 1] = array[i];
 	return (1);
 }
