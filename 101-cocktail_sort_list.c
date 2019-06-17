@@ -1,5 +1,5 @@
 #include "sort.h"
-/*
+/**
 *swap - swaps 2 nodes in a doubly-linked list
 *@a: address of first node
 *@b: address of second node
