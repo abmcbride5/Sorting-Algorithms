@@ -7,8 +7,9 @@
  */
 int main(void)
 {
-	size_t n = 20;
-	int *array = rand_array(n, 10000);
+	
+	size_t n = 500;
+	int *array = rand_array(n, 1000);
 
 	print_array(array, n);
 	printf("\n");

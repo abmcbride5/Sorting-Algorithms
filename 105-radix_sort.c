@@ -9,13 +9,24 @@
 **/
 int get_digit(int number, int digit)
 {
-	int i = 0, pow = 1;
+	int i = 0, pow = 1, ret;
 
 	for (i = 0; i < digit; i++)
 		pow *= 10;
-	return ((number % (pow * 10)) / pow);
+	ret = ((number % (pow * 10)) / pow);
+	return (ret);
 }
 
+
+void print_buckets(int *b)
+{
+	int i = 0;
+
+	printf("b {");
+	for (; i < 10; i++)
+		printf("%d, ", b[i]);
+	printf("}\n");
+}
 /*
  * radix_sort - sorts by radix
  * @array: the integer array to sort
@@ -25,17 +36,21 @@ int get_digit(int number, int digit)
  *
  * Return: void.
  */
-int radix_pass(int *array, size_t size, int digit, int *new_array)
+int radix_pass(int *array, ssize_t size, int digit, int *new_array)
 {
 	ssize_t i;
 	int buckets[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 	
-	for (i = 0; i < (ssize_t)size; i++)
+	for (i = 0; i < size; i++)
 		buckets[get_digit(array[i], digit)]++;
-	if (buckets[0] == (ssize_t)size)
+	if (buckets[0] == size)
 		return (0);
-	for (i = 1; i <= (ssize_t)size; i++)
+	for (i = 1; i <= 9; i++)
+	{
+		if (buckets[i] == size)
+			return (0);
 		buckets[i] += buckets[i - 1];
+	}
 	for(i = size - 1; i > -1; i--)
 		new_array[buckets[get_digit(array[i], digit)]-- - 1] = array[i];
 	return (1);
@@ -60,9 +75,9 @@ void radix_sort(int *array, size_t size)
 	new_array = ptr = malloc(sizeof(int) * size);
 	if (!new_array)
 		return;
-	for (i = 0, changed = 1; i < 10; i++)
+	for (i = 0; i < 10; i++)
 	{
-		changed = radix_pass(old_array, size, i, new_array);
+		changed = radix_pass(old_array, (ssize_t)size, i, new_array);
 		if (changed)
 		{
 			temp_ptr = old_array;
@@ -70,8 +85,6 @@ void radix_sort(int *array, size_t size)
 			new_array = temp_ptr;
 			print_array(old_array, size);
 		}
-		else
-			break;
 	}
 	for (i = 0; i < size; i++)
 		array[i] = old_array[i];
