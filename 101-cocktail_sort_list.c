@@ -62,6 +62,8 @@ void cocktail_sort_list(listint_t **list)
 	{
 		len = len->next;
 	}
+	if (i < 2)
+		return;
 	head = *list;
 	while (j < i)
 	{
