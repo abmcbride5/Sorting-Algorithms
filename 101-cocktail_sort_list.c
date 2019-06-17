@@ -17,8 +17,33 @@ void swap(listint_t *a, listint_t *b)
 	a->prev = b;
 	b->next = a;
 }
-
-
+/**
+*tail_traverse- function that sorts from the tail back
+*
+*@head: head of list
+*@tail: tail of the list
+*@list: original head of the list
+*
+*Return: new head of the list
+*/
+listint_t *tail_traverse(listint_t *head, listint_t *tail, listint_t *list)
+{
+	while (tail && tail->prev)
+	{
+		if (tail->n < tail->prev->n)
+		{
+			swap(tail->prev, tail);
+			if (tail->prev == NULL)
+				list = tail;
+			print_list(list);
+		}
+		else
+			tail = tail->prev;
+		if (tail->prev == NULL)
+			head = tail;
+	}
+	return (head);
+}
 
 /**
 *cocktail_sort_list - sorts linked list using cocktail shaker sort
@@ -45,8 +70,8 @@ void cocktail_sort_list(listint_t **list)
 			{
 				swap(head, head->next);
 				swaped++;
-				if (head->prev == NULL)
-					*list = head;
+				if (head->prev->prev == NULL)
+					*list = head->prev;
 				print_list(*list);
 			}
 			else
@@ -54,23 +79,8 @@ void cocktail_sort_list(listint_t **list)
 			if (head->next == NULL)
 				tail = head;
 		}
-		printf("END Loop 1\n");
-		while (tail && tail->prev)
-		{
-			if (tail->n < tail->prev->n)
-			{
-				swap(tail->prev, tail);
-				swaped++;
-				if (tail->prev == NULL)
-					*list = tail;
-				print_list(*list);
-
-			}
-			else
-				tail = tail->prev;
-			if (tail->prev == NULL)
-				head = tail;
-		}
+		head = tail_traverse(head, tail, *list);
+		*list = head;
 		j++;
 	}
 }
