@@ -18,8 +18,8 @@ void swap(int *array, size_t size, int *a, int *b)
 		*a = *a + *b;
 		*b = *a - *b;
 		*a = *a - *b;
-		print_array((const int *)array, size);
 	}
+	print_array((const int *)array, size);
 }
 
 /**
@@ -28,6 +28,7 @@ void swap(int *array, size_t size, int *a, int *b)
 *@array: array to be sorted
 *@start: start of array
 *@end: end of array
+*@size: size of array
 *
 */
 void siftdown(int *array, size_t start, size_t end, size_t size)
@@ -40,7 +41,7 @@ void siftdown(int *array, size_t start, size_t end, size_t size)
 		_swap = root;
 		if (array[_swap] < array[child])
 			_swap = child;
-		if (child + 1 <= end && 
+		if (child + 1 <= end &&
 			array[_swap] < array[child + 1])
 			_swap = child + 1;
 		if (_swap == root)
@@ -48,14 +49,20 @@ void siftdown(int *array, size_t start, size_t end, size_t size)
 		swap(array, size, &array[root], &array[_swap]);
 		root = _swap;
 	}
-	
 }
 
+/**
+*heapify - makes heap in-place
+*
+*@array: array to be sorted
+*@size: size of array
+*
+*/
 void heapify(int *array, size_t size)
 {
 	ssize_t start;
 
-	start = parent(size -1);
+	start = parent(size - 1);
 	while (start >= 0)
 	{
 		siftdown(array, start, size - 1, size);
