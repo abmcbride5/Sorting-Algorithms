@@ -1,7 +1,5 @@
 #include "sort.h"
 
-int gsize = 0;
-
 /**
  * merge_compare - compares merges
  * @array: the integer array to sort
@@ -47,6 +45,7 @@ void merge_compare(int *array, size_t start, size_t stop, int *new)
 void merge_sort_top_down(int *array, size_t start, size_t stop, int *new)
 {
 	size_t mid;
+
 	mid = (start + stop) / 2;
 	if (stop - start < 2)
 	{
@@ -74,7 +73,6 @@ void merge_sort(int *array, size_t size)
 	if (!array || size < 2)
 		return;
 
-	gsize = size;
 	new = malloc(sizeof(int) * size);
 	if (!new)
 		return;
