@@ -58,7 +58,7 @@ void radix_sort(int *array, size_t size)
 	int *old_array, *new_array, *temp_ptr, *ptr, changed;
 	size_t i;
 
-	if (!array || !size)
+	if (!array || size < 2)
 		return;
 
 	old_array = array;
