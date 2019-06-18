@@ -7,13 +7,13 @@
  *
  * Return: the digit value at given position
 **/
-int get_digit(int number, int digit)
+int get_digit(long number, int digit)
 {
-	int i = 0, pow = 1, ret;
+	long i = 0L, pow = 1L, ret;
 
 	for (i = 0; i < digit; i++)
-		pow *= 10;
-	ret = ((number % (pow * 10)) / pow);
+		pow *= 10L;
+	ret = ((number % (pow * 10L)) / pow);
 	return (ret);
 }
 
@@ -55,26 +55,28 @@ int radix_pass(int *array, ssize_t size, int digit, int *new_array)
  */
 void radix_sort(int *array, size_t size)
 {
-	int *old_array, *new_array, *temp_ptr, *ptr, changed;
-	size_t i;
+	int *old_array, *new_array, *temp_ptr, *ptr, max = 0;
+	size_t i, sd = 1;
 
-	if (!array || !size)
+	if (!array || size < 2)
 		return;
 
+	for (i = 0; i < size; i++)
+		if (array[i] > max)
+			max = array[i];
+	while (max /= 10)
+		sd++;
 	old_array = array;
 	new_array = ptr = malloc(sizeof(int) * size);
 	if (!new_array)
 		return;
-	for (i = 0; i < 10; i++)
+	for (i = 0; i < sd; i++)
 	{
-		changed = radix_pass(old_array, (ssize_t)size, i, new_array);
-		if (changed)
-		{
-			temp_ptr = old_array;
-			old_array = new_array;
-			new_array = temp_ptr;
-			print_array(old_array, size);
-		}
+		radix_pass(old_array, (ssize_t)size, i, new_array);
+		temp_ptr = old_array;
+		old_array = new_array;
+		new_array = temp_ptr;
+		print_array(old_array, size);
 	}
 	for (i = 0; i < size; i++)
 		array[i] = old_array[i];
