@@ -7,13 +7,13 @@
  *
  * Return: the digit value at given position
 **/
-int get_digit(int number, int digit)
+int get_digit(long number, int digit)
 {
-	int i = 0, pow = 1, ret;
+	long i = 0L, pow = 1L, ret;
 
 	for (i = 0; i < digit; i++)
-		pow *= 10;
-	ret = ((number % (pow * 10)) / pow);
+		pow *= 10L;
+	ret = ((number % (pow * 10L)) / pow);
 	return (ret);
 }
 
