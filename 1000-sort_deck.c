@@ -18,120 +18,84 @@ void swap(deck_node_t *a, deck_node_t *b)
 	a->prev = b;
 	b->next = a;
 }
-/**
-*tail_traverse- function that sorts from the tail back
-*
-*@head: head of list
-
-*
-*Return: new head of the list
-*/
-deck_node_t *tail_traverse(deck_node_t *head, deck_node_t *tail, deck_node_t *list)
-{
-	(void) list;	
-
-	while (tail && tail->prev)
-	{
-		if (less_than(tail->card, tail->prev->card))
-		{
-			swap(tail->prev, tail);
-			if (tail->prev == NULL)
-				list = tail;
-		}
-		else
-			tail = tail->prev;
-		if (tail->prev == NULL)
-			head = tail;
-	}
-	return (head);
-}
 
 /**
-*cocktail_sort_list - sorts linked list using cocktail shaker sort
-*
-*@list: doubly linked list to be sorted
-*/
-void cocktail_sort_list(deck_node_t **list)
+ * insertion_sort_list - insertion sorts a doubly-linked list
+ * @list: address of pointer to head node
+ *
+ * Return: void
+ */
+void insertion_sort_list(deck_node_t **list)
 {
-	deck_node_t *tail, *head, *len;
-	int i = 0, j = 0, swaped = 1;
+	deck_node_t *i, *j;
 
-	if (!*list)
+	if (!list || !*list || !(*list)->next)
 		return;
-	len = *list;
-	for (i = 0; len; i++)
+	i = (*list)->next;
+	while (i)
 	{
-		len = len->next;
-	}
-	if (i < 2)
-		return;
-	head = *list;
-	while (j < i)
-	{
-		swaped = 0;
-		while (head && head->next)
+		j = i;
+		i = i->next;
+		while (j && j->prev)
 		{
-			if (less_than(head->card, head->next->card))
+			if (less_than(j->prev->card, j->card))
 			{
-				swap(head, head->next);
-				swaped++;
-				if (head->prev->prev == NULL)
-					*list = head->prev;
+				swap(j->prev, j);
+				if (!j->prev)
+					*list = j;
 			}
 			else
-				head = head->next;
-			if (head->next == NULL)
-				tail = head;
+				j = j->prev;
 		}
-		head = tail_traverse(head, tail, *list);
-		*list = head;
-		j++;
+
 	}
 }
 
-
 /**
-*
-*
-*
+* sort_deck - sorts the deck by a given sort function
+* @deck: address to pointer of head
 *
 */
 void sort_deck(deck_node_t **deck)
 {
-	cocktail_sort_list(deck);
+	insertion_sort_list(deck);
 }
 
 /**
+* less_than - determines comparison order between two cards
+* @a: pointer of first card
+* @b: pointer of second card
 *
-*
+* Return: true if a > b
 */
 int less_than(const card_t *a, const card_t *b)
 {
-	
-	char *s1, *s2, *values[] = {"King", "Queen", "Jack", "10", "9", "8", "7", "6", "5", "4", "3", "2", "Ace"};
+	char *s1, *s2, *values[] = {"King", "Queen", "Jack", "10", "9", "8",
+		"7", "6", "5", "4", "3", "2", "Ace"};
 	int val_a = 0, val_b = 0, i = 0;
 
 	for (i = 0; i < 13; i++)
 	{
-		for(s1 = (char *)a->value ,s2 = values[i]; *s1 && *s1== *s2; ++s1, ++s2)
+		for (s1 = (char *)a->value, s2 = values[i]; *s1 && *s1 == *s2; ++s1, ++s2)
 			;
 		if (*s1 == 0 && *s2 == 0)
 		{
 			val_a = i;
-			 break;
+			break;
 		}
-	} 
+	}
 	for (i = 0; i < 13; i++)
 	{
-		for(s1 =(char *)b->value ,s2 = values[i]; *s1 && *s1== *s2; ++s1, ++s2)
+		for (s1 = (char *)b->value, s2 = values[i]; *s1 && *s1 == *s2; ++s1, ++s2)
 			;
 		if (*s1 == 0 && *s2 == 0)
 		{
 			val_b = i;
-			 break;
+			break;
 		}
-	} 
-	if (val_a == val_b)
-		return(a->kind < b->kind);
-	return (val_a < val_b);
+	}
+	if (a->kind == b->kind)
+		return (val_a < val_b);
+	return (a->kind > b->kind);
+
 }
