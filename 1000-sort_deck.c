@@ -18,60 +18,105 @@ void swap(deck_node_t *a, deck_node_t *b)
 	a->prev = b;
 	b->next = a;
 }
+/**
+*tail_traverse- function that sorts from the tail back
+*
+*@head: head of list
+*@tail: end of list
+*@list: list being traversed
+*
+*Return: new head of the list
+*/
+deck_node_t *tail_traverse(deck_node_t *head,
+	deck_node_t *tail, deck_node_t *list)
+{
+	(void) list;
+
+	while (tail && tail->prev)
+	{
+		if (less_than(tail->card, tail->prev->card, 1))
+		{
+			swap(tail->prev, tail);
+			if (tail->prev == NULL)
+				list = tail;
+		}
+		else
+			tail = tail->prev;
+		if (tail->prev == NULL)
+			head = tail;
+	}
+	return (head);
+}
 
 /**
- * insertion_sort_list - insertion sorts a doubly-linked list
- * @list: address of pointer to head node
- *
- * Return: void
- */
-void insertion_sort_list(deck_node_t **list)
+*cocktail_sort_list - sorts linked list using cocktail shaker sort
+*
+*@list: doubly linked list to be sorted
+*/
+void cocktail_sort_list(deck_node_t **list)
 {
-	deck_node_t *i, *j;
+	deck_node_t *tail, *head, *len;
+	int i = 0, j = 0, swaped = 1;
 
-	if (!list || !*list || !(*list)->next)
+	if (!*list)
 		return;
-	i = (*list)->next;
-	while (i)
+	len = *list;
+	for (i = 0; len; i++)
 	{
-		j = i;
-		i = i->next;
-		while (j && j->prev)
+		len = len->next;
+	}
+	if (i < 2)
+		return;
+	head = *list;
+	while (j < i)
+	{
+		swaped = 0;
+		while (head && head->next)
 		{
-			if (less_than(j->prev->card, j->card))
+			if (less_than(head->card, head->next->card, 0))
 			{
-				swap(j->prev, j);
-				if (!j->prev)
-					*list = j;
+				swap(head, head->next);
+				swaped++;
+				if (head->prev->prev == NULL)
+					*list = head->prev;
 			}
 			else
-				j = j->prev;
+				head = head->next;
+			if (head->next == NULL)
+				tail = head;
 		}
-
+		head = tail_traverse(head, tail, *list);
+		*list = head;
+		j++;
 	}
 }
 
+
 /**
-* sort_deck - sorts the deck by a given sort function
-* @deck: address to pointer of head
+*sort_deck- function that sorts a deck
 *
+*@deck: deck to be sorted
 */
 void sort_deck(deck_node_t **deck)
 {
-	insertion_sort_list(deck);
+	cocktail_sort_list(deck);
 }
 
 /**
-* less_than - determines comparison order between two cards
-* @a: pointer of first card
-* @b: pointer of second card
+*less_than - function that compares two nodes
 *
-* Return: true if a > b
+*@a: first node
+*@b: second node
+*@flag: determines which comparison is done based on direction
+* list is being traversed in
+*
+*Return: 1 if in place 0 if not in place
 */
-int less_than(const card_t *a, const card_t *b)
+int less_than(const card_t *a, const card_t *b, int flag)
 {
-	char *s1, *s2, *values[] = {"King", "Queen", "Jack", "10", "9", "8",
-		"7", "6", "5", "4", "3", "2", "Ace"};
+
+	char *s1, *s2, *values[] = {"King", "Queen", "Jack", "10",
+		"9", "8", "7", "6", "5", "4", "3", "2", "Ace"};
 	int val_a = 0, val_b = 0, i = 0;
 
 	for (i = 0; i < 13; i++)
@@ -94,8 +139,14 @@ int less_than(const card_t *a, const card_t *b)
 			break;
 		}
 	}
-	if (a->kind == b->kind)
-		return (val_a < val_b);
-	return (a->kind > b->kind);
+	if (!flag)
+	{
+		if (a->kind == b->kind)
+			return (val_a < val_b);
+		return (a->kind > b->kind);
 
+	}
+	if (a->kind == b->kind)
+		return (val_a > val_b);
+	return (a->kind < b->kind);
 }
