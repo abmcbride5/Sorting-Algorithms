@@ -29,7 +29,7 @@ int get_digit(long number, int digit)
 int radix_pass(int *array, ssize_t size, int digit, int *new_array)
 {
 	ssize_t i;
-	int buckets[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+	int buckets[10] = {0};
 
 	for (i = 0; i < size; i++)
 		buckets[get_digit(array[i], digit)]++;
