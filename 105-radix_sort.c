@@ -13,7 +13,7 @@ int get_digit(long number, int digit)
 
 	for (i = 0; i < digit; i++)
 		pow *= 10L;
-	ret = ((number / pow) % 10);
+	ret = ((number % (pow * 10L)) / pow);
 	return (ret);
 }
 
