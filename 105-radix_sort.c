@@ -33,6 +33,8 @@ int radix_pass(int *array, ssize_t size, int digit, int *new_array)
 
 	for (i = 0; i < size; i++)
 		buckets[get_digit(array[i], digit)]++;
+	if (buckets[0] == size)
+		return (0);
 	for (i = 1; i <= 9; i++)
 		buckets[i] += buckets[i - 1];
 	for (i = size - 1; i > -1; i--)
