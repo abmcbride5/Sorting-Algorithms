@@ -48,7 +48,7 @@ typedef struct deck_node_s
 
 	/*prototypes*/
 void sort_deck(deck_node_t **deck);
-int less_than(const card_t *a, const card_t *b);
+int less_than(const card_t *a, const card_t *b, int flag);
 void cocktail_sort_list(deck_node_t **list);
 
 
